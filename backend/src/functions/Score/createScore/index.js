@@ -46,23 +46,24 @@ exports.handler =  function(event, context, callback) {
     
       try {
         let item = docClient.transactWrite({TransactItems: updateItems}).promise()
-        
-        let object = {
-            message: "Teams created successfully."
-        }
-        let response = {
-            "statusCode": 200,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-            "body": JSON.stringify(object),
-        }
-        callback(null, response)
 
+        item.then(res => {
+            let object = {
+                message: "Scores updated successfully."
+            }
+            let response = {
+                "statusCode": 200,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                "body": JSON.stringify(object),
+            }
+            callback(null, response)
+        })
     } catch (error) {
         console.log("ERR" + error)
         let object = {
-            message: "An error occurred, please try again later."
+            message: "An error while updating the scores, please try again later."
         }
         let response = {
             "statusCode": 403,

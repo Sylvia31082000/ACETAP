@@ -42,11 +42,11 @@ resource "aws_api_gateway_deployment" "api-stage-deployment" {
   }
 }
 
-# Creates an API key with this name
-resource "aws_api_gateway_api_key" "api-key" {
-  name        = var.api_key_name
-  description = "(Managed by Terraform) The API key meant for the Admin Application APIs."
-}
+# # Creates an API key with this name
+# resource "aws_api_gateway_api_key" "api-key" {
+#   name        = var.api_key_name
+#   description = "(Managed by Terraform) The API key meant for the Admin Application APIs."
+# }
 
 # API GATEWAY (Usage Plan, limits)
 # Sets up & configures the usage plan for the specified stage of the API
@@ -65,12 +65,12 @@ resource "aws_api_gateway_usage_plan" "api-usage-plan" {
   }
 }
 
-# Provides a usage plan key to the API Gateway
-resource "aws_api_gateway_usage_plan_key" "api-usage-plan-key" {
-  key_id        = aws_api_gateway_api_key.api-key.id
-  key_type      = "API_KEY"
-  usage_plan_id = aws_api_gateway_usage_plan.api-usage-plan.id
-}
+# # Provides a usage plan key to the API Gateway
+# resource "aws_api_gateway_usage_plan_key" "api-usage-plan-key" {
+#   key_id        = aws_api_gateway_api_key.api-key.id
+#   key_type      = "API_KEY"
+#   usage_plan_id = aws_api_gateway_usage_plan.api-usage-plan.id
+# }
 
 # API GATEWAY (Enable CloudWatch Logs)
 resource "aws_api_gateway_account" "api-account" {

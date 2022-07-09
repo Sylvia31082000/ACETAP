@@ -11,7 +11,7 @@ module "api_gateway" {
     path_to_openapi = local.api_gateway_path_to_openapi
 
     # API Key / Usage Plan
-    api_key_name         = "${local.api_gateway_name_prefix}-key"
+    # api_key_name         = "${local.api_gateway_name_prefix}-key"
     api_usage_plan_name  = "${local.api_gateway_name_prefix}-usage-plan"
     api_usage_plan_rate  = 3000
     api_usage_plan_burst = 1500

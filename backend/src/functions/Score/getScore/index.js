@@ -28,8 +28,6 @@ async function get(params) {
 
         console.log(JSON.stringify(scanResults))
         
-        // return scanResults;
-        // let item = await docClient.scan(params).promise()
         let response = {
             "statusCode": 200,
             headers: {
@@ -40,7 +38,7 @@ async function get(params) {
         return response
     } catch (error) {
         let object = {
-            message: "An error occurred, please try again later."
+            message: "An error occurred while retrieving scoresAn error occured while trying to create new teams, please try again later."
         }
         let response = {
             "statusCode": 403,

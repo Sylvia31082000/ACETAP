@@ -23,7 +23,9 @@ const deleteTeams = `${process.env.REACT_APP_API_URL}/team/deleteTeams`
 
 const defaultState = {
   text: "",
-  teams: []
+  teams: [],
+  message: "",
+  status: ""
 }
 
 class Teams extends React.Component {
@@ -105,9 +107,17 @@ class Teams extends React.Component {
   clearData() {
     axios.post(deleteTeams, {}, {}).then(res=> {
       console.log(res)
-      window.location.reload(false)
+      // window.location.reload(false)
+      this.setState({
+        ["teams"]: [],
+        ["message"]: res.data,
+        ["status"]: "success"
+      });
     }).catch(err => {
-      console.log("An error occured while trying to create new teams.")
+      this.setState({
+        ["message"]: err.data,
+        ["status"]: "error"
+      });
     })
   }
 
@@ -120,11 +130,26 @@ class Teams extends React.Component {
       const requestBody = {
         text: this.state.text
       }
-      axios.post(createTeam, requestBody, {}).then(res=> {
-        console.log(res)
-        window.location.reload(false)
-        // let createMessage = res.data.message
-        // this.setState({createMessage})
+      axios.post(createTeam, requestBody, {}).then(messageRes=> {
+        axios.post(getScore, {}, {}).then(res=> {
+          console.log(res.data)
+          var arr = res.data
+  
+          this.setState({
+            ["teams"]: arr,
+            // ["status"]: "success",
+            // ["message"]: messageRes.data
+          });
+          console.log(this.state.status)
+          console.log(this.state.message)
+
+        }).catch(err => {
+          // this.setState({
+          //   ["status"]: "error",
+          //   ["message"]: err.data
+          // });
+          console.log("An error occured while trying to create new teams.")
+        })
       }).catch(err => {
         console.log("An error occured while trying to create new teams.")
       })

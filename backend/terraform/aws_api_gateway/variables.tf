@@ -53,10 +53,10 @@ variable "api_usage_plan_burst" {
   type        = string
 }
 
-variable "api_key_name" {
-  description = "The name of the API Gateway's API key."
-  type        = string
-}
+# variable "api_key_name" {
+#   description = "The name of the API Gateway's API key."
+#   type        = string
+# }
 
 variable "endpoint_configuration_type" {
   description = "The allowed endpoint type. This resource currently only supports managing a single value. Valid values: EDGE, REGIONAL or PRIVATE. If unspecified, defaults to EDGE."

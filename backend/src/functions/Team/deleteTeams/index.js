@@ -44,20 +44,30 @@ async function performDelete(params) {
         deleteParams.RequestItems[process.env.TEAM_TABLE_NAME] = itemsToDelete
         console.log(JSON.stringify(deleteParams))
 
-        // return scanResults;
-        let item = docClient.batchWrite(deleteParams).promise()
         let response = {
             "statusCode": 200,
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
-            "body": "Successfully deleted",
+            "body": "Teams information has been cleared successfully.",
         }
-        return response
+
+        if (itemsToDelete.length > 0) {
+            // return scanResults;
+            let item = docClient.batchWrite(deleteParams).promise()
+
+            item.then(res => {
+                return response
+            })
+        } else {
+            return response
+        }
+
+        
     } catch (error) {
         console.log(error)
         let object = {
-            message: "An error occurred, please try again later."
+            message: "An error occurred while clearing teams information, please try again later."
         }
         let response = {
             "statusCode": 403,

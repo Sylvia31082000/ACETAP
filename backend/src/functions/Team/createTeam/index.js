@@ -43,21 +43,24 @@ exports.handler =  function(event, context, callback) {
       try {
         let item = docClient.batchWrite(params).promise()
         
-        let object = {
-            message: "Teams created successfully."
-        }
-        let response = {
-            "statusCode": 200,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-            "body": JSON.stringify(object),
-        }
-        callback(null, response)
+        item.then(res => {
+            let object = {
+                message: "Teams registered successfully."
+            }
+            let response = {
+                "statusCode": 200,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                "body": JSON.stringify(object),
+            }
+            callback(null, response)
+        })
+        
 
     } catch (error) {
         let object = {
-            message: "An error occurred, please try again later."
+            message: "An error occurred while registering for teams, please try again later."
         }
         let response = {
             "statusCode": 403,
