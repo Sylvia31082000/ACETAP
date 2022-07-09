@@ -30,18 +30,8 @@ locals {
     api_gateway_authorizer_name_prefix = local.api_gateway_name
     api_gateway_path_to_openapi        = "./api_specs/api.json"
 
-    # Standard API Key
-    api_gateway_security_definition_method_api = "${local.api_gateway_authorizer_name_prefix}-key"
-
-    cognito_user_pool_name = "admin-user-pool"
-    cognito_user_pool_client_app_name = "admin-user-pool-app-client"
-
     lambda_data_table_arns = [
         "arn:aws:dynamodb:ap-southeast-1:176612440753:table/football-team-table"  
-    ]
-
-    lambda_user_pool_arns = [
-        module.user_pool.aws_cognito_user_pool_arn
     ]
 
     api_gateway_type = "REGIONAL"

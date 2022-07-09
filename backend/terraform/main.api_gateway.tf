@@ -4,14 +4,11 @@ module "api_gateway" {
 
     data_table      = local.lambda_data_table_arns
 
-    user_pool_arn   = local.lambda_user_pool_arns
-
     # Stage Deployment
     stage_name      = local.env
     path_to_openapi = local.api_gateway_path_to_openapi
 
     # API Key / Usage Plan
-    # api_key_name         = "${local.api_gateway_name_prefix}-key"
     api_usage_plan_name  = "${local.api_gateway_name_prefix}-usage-plan"
     api_usage_plan_rate  = 3000
     api_usage_plan_burst = 1500
@@ -33,10 +30,6 @@ module "api_gateway" {
             create_score = module.lambda_create_score.aws_lambda_invoke_arn
             get_score = module.lambda_get_score.aws_lambda_invoke_arn
 
-
-            security_method_api_key         = local.api_gateway_security_definition_method_api
-            security_method_api_val         = "football-api"
-            
             # ----------------------
             # CORS Integrations
             # ----------------------

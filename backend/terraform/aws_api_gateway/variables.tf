@@ -28,11 +28,6 @@ variable "cloudwatch_data_trace_enabled" {
   type        = bool
 }
 
-variable "user_pool_arn" {
-  description = "ARN of user pool."
-  type        = list(string)
-}
-
 variable "data_table" {
   description = "The list of tables ARN accessed by aws lambda."
   type        = list(string)
@@ -52,11 +47,6 @@ variable "api_usage_plan_burst" {
   description = "The throttling burst limit of the API Gateway."
   type        = string
 }
-
-# variable "api_key_name" {
-#   description = "The name of the API Gateway's API key."
-#   type        = string
-# }
 
 variable "endpoint_configuration_type" {
   description = "The allowed endpoint type. This resource currently only supports managing a single value. Valid values: EDGE, REGIONAL or PRIVATE. If unspecified, defaults to EDGE."
