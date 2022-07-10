@@ -55,3 +55,32 @@ module "lambda_get_score" {
         METHOD                      = "score/getScore"
     }
 }
+
+# Delete score data
+module "lambda_delete_score" {
+    source = "./aws_lambda"
+    name = "deleteScore"
+    file_path = "../src/functions/Score/deleteScore"
+    iam_role_policy = <<-EOF
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+            "dynamodb:Scan",
+            "dynamodb:TransactWriteItems",
+            "dynamodb:UpdateItem"
+            ],
+            "Resource": "${local.team_table_arn}"
+        }
+        ]
+    }
+    EOF
+    data_table = local.lambda_data_table_arns
+    env_vars = {
+        ENV                         = local.lambda_env
+        TEAM_TABLE_NAME             = local.team_table_name
+        METHOD                      = "score/deleteScore"
+    }
+}

@@ -16,6 +16,7 @@ exports.handler = function(event, context, callback) {
       })
 }
 
+// To retrieve all items
 async function get(params) {
     try {
         const scanResults = [];

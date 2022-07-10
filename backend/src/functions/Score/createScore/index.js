@@ -6,7 +6,6 @@ var teams
 exports.handler =  function(event, context, callback) {
 
     let body = JSON.parse(event.body)
-    console.log("HELLO"+ body.text)
     teams = {}
 
     // To split every line
@@ -40,11 +39,11 @@ exports.handler =  function(event, context, callback) {
         updateItems.push(updateItem)
     }
 
-    // params.RequestItems[] = arrItems
     console.log(JSON.stringify(updateItems))
 
     
       try {
+        // Perform transactions to ensure that all updates occur successfully
         let item = docClient.transactWrite({TransactItems: updateItems}).promise()
 
         item.then(res => {
@@ -76,6 +75,7 @@ exports.handler =  function(event, context, callback) {
     }
 }
 
+// Update the current state of the teams based on each match taken in as an item parameter
 updateTable = function(item) {
     var arr = item.split(" ")
     var firstTeam = arr[0]
@@ -90,6 +90,7 @@ updateTable = function(item) {
     updateTeam(secTeam, secScore, !firstWin, draw)
 }
 
+// Update the relevant scores
 updateTeam = function(teamName, goals, win, draw) {
     if (!teams.hasOwnProperty(teamName)) {
         teams[teamName] = {

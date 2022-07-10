@@ -29,6 +29,7 @@ module "api_gateway" {
             # SCORE
             create_score = module.lambda_create_score.aws_lambda_invoke_arn
             get_score = module.lambda_get_score.aws_lambda_invoke_arn
+            delete_score = module.lambda_delete_score.aws_lambda_invoke_arn
 
             # ----------------------
             # CORS Integrations

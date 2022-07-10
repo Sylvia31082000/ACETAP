@@ -29,7 +29,7 @@
               "in": "body",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createTeamRequest"
+                "$ref": "#/definitions/teamRequest"
               }
             }
           ],
@@ -37,7 +37,7 @@
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/createTeamResponse"
+                "$ref": "#/definitions/teamResponse"
               }
             }
           },
@@ -118,7 +118,7 @@
               "in": "body",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createTeamRequest"
+                "$ref": "#/definitions/teamRequest"
               }
             }
           ],
@@ -126,7 +126,7 @@
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/createTeamResponse"
+                "$ref": "#/definitions/teamResponse"
               }
             }
           },
@@ -207,7 +207,7 @@
               "in": "body",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createTeamRequest"
+                "$ref": "#/definitions/scoreRequest"
               }
             }
           ],
@@ -215,7 +215,7 @@
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/createTeamResponse"
+                "$ref": "#/definitions/scoreResponse"
               }
             }
           },
@@ -296,7 +296,7 @@
               "in": "body",
               "required": true,
               "schema": {
-                "$ref": "#/definitions/createTeamRequest"
+                "$ref": "#/definitions/scoreRequest"
               }
             }
           ],
@@ -304,7 +304,7 @@
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/createTeamResponse"
+                "$ref": "#/definitions/scoreResponse"
               }
             }
           },
@@ -363,10 +363,99 @@
             }
           }
         }
+      },
+      "score/deleteScore": {
+        "post": {
+          "tags": [
+            "DeleteScore"
+          ],
+          "operationId": "Score_deleteScore",
+          "description": "Delete score data from the team table.",
+          "consumes": [
+            "application/json",
+            "text/json"
+          ],
+          "produces": [
+            "application/json",
+            "text/json"
+          ],
+          "parameters": [
+            {
+              "name": "request",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/scoreRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/scoreResponse"
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "uri": "${delete_score}",
+            "passthroughBehavior": "when_no_match",
+            "httpMethod": "POST",
+            "type": "aws_proxy"
+          }
+        },
+        "options": {
+          "tags": [
+            "CORS"
+          ],
+          "summary": "CORS support",
+          "description": "Enable CORS by returning correct headers",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Default response for CORS method",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "type": "string"
+                },
+                "Access-Control-Allow-Methods": {
+                  "type": "string"
+                },
+                "Access-Control-Allow-Headers": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "type": "mock",
+            "requestTemplates": {
+              "application/json": "{\"statusCode\":200}"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200",
+                "responseParameters": {
+                  "method.response.header.Access-Control-Allow-Methods": "${cors_response_access_control_allow_methods}",
+                  "method.response.header.Access-Control-Allow-Headers": "${cors_response_access_control_allow_headers}",
+                  "method.response.header.Access-Control-Allow-Origin": "${cors_response_access_control_allow_origin}"
+                },
+                "responseTemplates": {
+                  "application/json": "{}"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "definitions": {
-      "createTeamRequest": {
+      "teamRequest": {
         "type": "object",
         "properties": {
           "teamNumber": {
@@ -380,7 +469,32 @@
           }
         }
       },
-      "createTeamResponse": {
+      "teamResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "scoreRequest": {
+        "type": "object",
+        "properties": {
+          "teamA": {
+            "type": "string"
+          },
+          "teamB": {
+            "type": "string"
+          },
+          "scoreA": {
+            "type": "number"
+          },
+          "scoreB": {
+            "type": "number"
+          }
+        }
+      },
+      "scoreResponse": {
         "type": "object",
         "properties": {
           "message": {

@@ -10,13 +10,13 @@ exports.handler = function(event, context, callback) {
       }
 
       performDelete(params).then(res => {
-        //   console.log(JSON.parse(res.body))
           callback(null, res)
       })
 }
 
 async function performDelete(params) {
     try {
+        // To retrieve all items
         const scanResults = [];
         var items;
         do {
@@ -25,7 +25,6 @@ async function performDelete(params) {
             params.ExclusiveStartKey  = items.LastEvaluatedKey;
         } while (typeof items.LastEvaluatedKey !== "undefined");
 
-        // console.log(JSON.stringify(scanResults))
         
         var itemsToDelete = []
         for (var obj of scanResults) {
@@ -52,8 +51,8 @@ async function performDelete(params) {
             "body": "Teams information has been cleared successfully.",
         }
 
+        // To perform a batch write for deletion
         if (itemsToDelete.length > 0) {
-            // return scanResults;
             let item = docClient.batchWrite(deleteParams).promise()
 
             item.then(res => {

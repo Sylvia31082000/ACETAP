@@ -41,6 +41,7 @@ exports.handler =  function(event, context, callback) {
 
     
       try {
+        // To perform a batch insertion into the DynamoDB table
         let item = docClient.batchWrite(params).promise()
         
         item.then(res => {
