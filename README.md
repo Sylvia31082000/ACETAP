@@ -1,7 +1,7 @@
 # ACETAP
 
 # Project Name
-> URL Shorterner is a simple web application service that allows users to shortern URLs and retrieve any shortened URLs.
+> It is a simple web application service that allows users to shortern URLs and retrieve any shortened URLs.
 > Hosted website [_here_](http://s3-championship.s3-website-ap-southeast-1.amazonaws.com/football). 
 
 ## Table of Contents
